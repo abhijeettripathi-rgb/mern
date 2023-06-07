@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MainScreen from '../../components/MainScreen'
 import { Button, Form ,Row} from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import "./RegisterScreen.css"
 import axios from 'axios'
 import Loading from '../../components/Loading'
 import ErrorMessage from '../../components/ErrorMessage'
+import { useDispatch, useSelector } from 'react-redux'
+import { register } from '../../actions/userActions'
 const fetch = require('node-fetch');
 
 const RegisterScreen = () => {
- 
+  
+  const navigate=useNavigate();
+
    const [email, setEmail] = useState("");  
    const [name, setName] = useState("");  
    const [pic, setPic] = useState(
@@ -19,36 +23,28 @@ const RegisterScreen = () => {
    const [confirmpassword, setConfirmPassword] = useState("");
    const [message, setMessage] = useState(null);
    const [picMessage,setPicMessage]=useState(null);
-   const [error, setError] = useState(false);
-   const [loading, setLoading] = useState(false);
+
+   const dispatch=useDispatch();
+   
+   const userRegister=useSelector(state=>state.userRegister);
+   const {loading,error,userInfo}=userRegister;
+
+  useEffect(()=>{
+    if(userInfo){
+      navigate('/mynotes');
+    }
+  })
+
 
   const submitHandler=async(e)=>{
     e.preventDefault();
-    if(password!==confirmpassword){
-      setMessage("password do not match")
-    }else{
-     setMessage(null)
-     try{
-        const config={
-          headers:{
-            "Content-type": "application/json",
-          },
-        };
-        setLoading(true);
 
-        const {data}=await axios.post(
-           "/api/users",
-           {name,pic,email,password},
-           config
-        );
-        setLoading(false);
-        localStorage.setItem("userInfo",JSON.stringify(data));
-     } catch (error){
-       setError(error.response.data.message);
-     }
+    if(password!=confirmpassword){
+      setMessage("passwords do not matc");
     }
-
-   
+    else{
+      dispatch(register(name,email,password,pic));
+    }
   }; 
 
   const postDetails=(pics)=>{
@@ -87,7 +83,8 @@ const RegisterScreen = () => {
         <Form 
         onSubmit={submitHandler}
         >
-      <Form.Group className="mb-3" controlId="name">
+      {/* <Form.Group className="mb-3" controlId="name"> */}
+      <Form.Group className='mb-3'>
         <Form.Label>Name</Form.Label>
         <Form.Control type="name"
         value={name}
@@ -97,7 +94,8 @@ const RegisterScreen = () => {
       </Form.Group>
 
 
-      <Form.Group className="mb-3" controlId="formGroupEmail">
+      {/* <Form.Group className="mb-3" controlId="formGroupEmail"> */}
+      <Form.Group className="mb-3" >
         <Form.Label>Email address</Form.Label>
         <Form.Control type="email"
         value={email}
@@ -107,7 +105,8 @@ const RegisterScreen = () => {
       </Form.Group>
 
 
-      <Form.Group className="mb-3" controlId="formGroupPassword">
+      {/* <Form.Group className="mb-3" controlId="formGroupPassword"> */}
+      <Form.Group className="mb-3" >
         <Form.Label>Password</Form.Label>
         <Form.Control type="password" placeholder="Password" 
          value={password}
@@ -117,7 +116,8 @@ const RegisterScreen = () => {
 
 
 
-      <Form.Group className="mb-3" controlId="formGroupPassword">
+      {/* <Form.Group className="mb-3" controlId="formGroupConfirmPassword"> */}
+      <Form.Group className="mb-3">
         <Form.Label>Confirm Password</Form.Label>
         <Form.Control type="confirmpassword" placeholder="Password" 
          value={confirmpassword}
@@ -125,14 +125,15 @@ const RegisterScreen = () => {
         />
       </Form.Group>
 
-      <Form.Group controlId="formFile" className="mb-3">
+      {/* <Form.Group controlId="formFile" className="mb-3"> */}
+      <Form.Group  className="mb-3">
         <Form.Label>Profile Picture</Form.Label>
         <Form.Control  type="file" 
           onChange={(e)=>postDetails(e.target.files[0])}
           id="custom-file"
           label="Upload Profile Picture"
           className='py-1'
-          custom
+          custom="true"
         />
       </Form.Group>
       {picMessage && (

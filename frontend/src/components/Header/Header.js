@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React  from 'react'
 import { Container, Form, Nav, NavDropdown, Navbar } from "react-bootstrap";
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { logout } from '../../actions/userActions';
 
 
 const Header = () => {
  
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [error, setError] = useState(false);
-  // const [loading, setLoading] = useState(false);
-  // const navigate = useNavigate();
+  const navigate=useNavigate();
+  const dispatch=useDispatch();
 
-  // useEffect(() => {
-  //   const userInfo = localStorage.getItem("userInfo");
-
-  //   if (userInfo) {
-  //     navigate("/mynotes");
-  //   }
-  // }, []);
+  const userLogin=useSelector((state)=>state.userLogin);
+  const {userInfo}=userLogin;
   
+  const logoutHandler=()=>{
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <Navbar bg="primary" expand="lg" variant='dark'>
     <Container >
@@ -56,11 +55,7 @@ const Header = () => {
             <NavDropdown.Item href="#action3">My profile</NavDropdown.Item>
     
             <NavDropdown.Divider />
-            <NavDropdown.Item onClick={()=>{
-              localStorage.removeItem("userInfo");
-              window.location.href = "/"
-             
-            }}>
+            <NavDropdown.Item onClick={logoutHandler} >
               Logout
             </NavDropdown.Item>
           </NavDropdown>
