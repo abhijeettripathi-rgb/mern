@@ -6,18 +6,26 @@ import MyNotes from './screens/MyNotes/MyNotes';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginScreen from "./screens/LoginScreen/LoginScreen"
 import RegisterScreen from './screens/RegisterScreen/RegisterScreen';
-
-const App = ()=> (
+import CreateNote from './screens/CreateNote/CreateNote'
+import SingleNote from './screens/SingleNote/SingleNote'
+import { useState } from 'react';
+const App = ()=> {
+  
+  const [search,setSearch]=useState("");
+  
+  return (
    <div>
   <Router>
 
-  <Header />
+  <Header setSearch={setSearch} />
   <main>
       <Routes>
         <Route path="/" element={<Landingpage />} />
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/register" element={<RegisterScreen />} />
-        <Route path="/mynotes" element={<MyNotes />} />
+        <Route path="/createnote" element={<CreateNote />} />
+        <Route path="/note/:id" element={<SingleNote />} />
+        <Route path="/mynotes" element={<MyNotes search={search}/>} />
       </Routes>
 
   
@@ -29,7 +37,7 @@ const App = ()=> (
  
  
 
-);
+)};
 
 
 

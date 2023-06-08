@@ -3,7 +3,7 @@ import MainScreen from '../../components/MainScreen'
 import { Button, Form ,Row} from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import "./RegisterScreen.css"
-import axios from 'axios'
+// import axios from 'axios'
 import Loading from '../../components/Loading'
 import ErrorMessage from '../../components/ErrorMessage'
 import { useDispatch, useSelector } from 'react-redux'
@@ -39,7 +39,7 @@ const RegisterScreen = () => {
   const submitHandler=async(e)=>{
     e.preventDefault();
 
-    if(password!=confirmpassword){
+    if(password!==confirmpassword){
       setMessage("passwords do not matc");
     }
     else{
