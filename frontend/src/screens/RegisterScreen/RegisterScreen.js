@@ -33,7 +33,7 @@ const RegisterScreen = () => {
     if(userInfo){
       navigate('/mynotes');
     }
-  })
+  },[navigate,userInfo]);
 
 
   const submitHandler=async(e)=>{
