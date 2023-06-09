@@ -1,11 +1,11 @@
-import React, { useEffect} from 'react'
 import MainScreen from '../../components/MainScreen'
-import { Accordion, Badge, Button, Card } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux"
 import { deleteNoteAction, listNotes } from '../../actions/notesActions'
 import  Loading  from '../../components/Loading'
 import ErrorMessage from '../../components/ErrorMessage'
+import React, { useEffect} from 'react'
+import { Accordion, Badge, Button, Card } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux"
 
 const MyNotes = ({search}) => {
 
@@ -45,7 +45,7 @@ const MyNotes = ({search}) => {
 
 
   return (
-    <MainScreen title={` Welcome back ${userInfo.name}..`} >
+    <MainScreen title={` Welcome back ${userInfo?.name}..`} >
     <Link to="/createnote">
       <Button style={{
         marginLeft:10,
