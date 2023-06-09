@@ -8,7 +8,7 @@ import Loading from '../../components/Loading'
 import ErrorMessage from '../../components/ErrorMessage'
 import { useDispatch, useSelector } from 'react-redux'
 import { register } from '../../actions/userActions'
-const fetch = require('node-fetch');
+
 
 const RegisterScreen = () => {
   
